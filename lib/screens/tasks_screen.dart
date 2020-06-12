@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:todoey/screens/add_task_screen.dart';
 import 'package:todoey/widgets/task_list.dart';
 
 class TasksScreen extends StatelessWidget {
@@ -63,9 +64,10 @@ class TasksScreen extends StatelessWidget {
       ),
       floatingActionButton: FloatingActionButton(
         backgroundColor: Colors.lightBlueAccent,
-        onPressed: () {
-          // todo add bottom sheet
-        },
+        onPressed: () => showModalBottomSheet(
+          context: context,
+          builder: (context) => AddTaskScreen(),
+        ),
         child: Icon(Icons.add),
       ),
     );

@@ -1,16 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:todoey/data/task.dart';
+import 'package:provider/provider.dart';
+import 'package:todoey/data/task_data.dart';
 import 'package:todoey/screens/add_task_screen.dart';
 import 'package:todoey/widgets/task_list.dart';
 
-class TasksScreen extends StatefulWidget {
-  @override
-  _TasksScreenState createState() => _TasksScreenState();
-}
-
-class _TasksScreenState extends State<TasksScreen> {
-  List<Task> tasks = [];
-
+class TasksScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -47,7 +41,7 @@ class _TasksScreenState extends State<TasksScreen> {
                   ),
                 ),
                 Text(
-                  '${tasks.length} Tasks',
+                  '${Provider.of<TaskData>(context).count} Tasks',
                   style: TextStyle(
                     color: Colors.white,
                     fontSize: 18,
@@ -65,10 +59,7 @@ class _TasksScreenState extends State<TasksScreen> {
                     topLeft: Radius.circular(20),
                     topRight: Radius.circular(20)),
               ),
-              child: TaskList(
-                tasks,
-                toggle: (i) => setState(() => tasks[i].toggle()),
-              ),
+              child: TaskList(),
             ),
           )
         ],
@@ -81,14 +72,12 @@ class _TasksScreenState extends State<TasksScreen> {
           builder: (context) => SingleChildScrollView(
             child: Container(
               padding: EdgeInsets.only(
-                bottom: MediaQuery.of(context).viewInsets.bottom,
+                bottom: MediaQuery
+                  .of(context)
+                  .viewInsets
+                  .bottom,
               ),
-              child: AddTaskScreen(
-                onAdd: (name) {
-                  setState(() => tasks.add(Task(name)));
-                  Navigator.pop(context);
-                },
-              ),
+              child: AddTaskScreen(),
             ),
           ),
         ),

@@ -1,30 +1,27 @@
 import 'package:flutter/material.dart';
-import 'package:todoey/data/task.dart';
+import 'package:provider/provider.dart';
+import 'package:todoey/data/task_data.dart';
 
 class TaskTile extends StatelessWidget {
-  final Task task;
-  final Function toggle;
+  final int index;
 
-  const TaskTile(
-    this.task, {
-    Key key,
-    this.toggle,
-  }) : super(key: key);
+  const TaskTile(this.index, {Key key}) : super(key: key);
 
   @override
-  Widget build(BuildContext context) {
-    return ListTile(
-      title: Text(
-        task.name,
-        style: TextStyle(
-          decoration: task.isDone ? TextDecoration.lineThrough : null,
+  Widget build(BuildContext context) => Consumer<TaskData>(
+        builder: (c, data, child) => ListTile(
+          title: Text(
+            data.tasks[index].name,
+            style: TextStyle(
+              decoration:
+                  data.tasks[index].isDone ? TextDecoration.lineThrough : null,
+            ),
+          ),
+          trailing: Checkbox(
+            value: data.tasks[index].isDone,
+            activeColor: Colors.lightBlueAccent,
+            onChanged: (value) => data.toggle(index),
+          ),
         ),
-      ),
-      trailing: Checkbox(
-        value: task.isDone,
-        activeColor: Colors.lightBlueAccent,
-        onChanged: (value) => toggle(),
-      ),
-    );
-  }
+      );
 }

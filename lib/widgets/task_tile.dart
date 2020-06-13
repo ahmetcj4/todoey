@@ -22,6 +22,7 @@ class TaskTile extends StatelessWidget {
             activeColor: Colors.lightBlueAccent,
             onChanged: (value) => data.toggle(index),
           ),
+          onLongPress: () => data.remove(index),
         ),
       );
 }
